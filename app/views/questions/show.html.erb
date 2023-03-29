@@ -1,0 +1,32 @@
+<main>
+  <% if @question.category.nil? %>
+    <div id="category-buttons"></div>
+    <div id="spinner" class="text-center" style="display: none;">
+      <i class="fa fa-spinner fa-spin"></i> Loading...
+    </div>
+  <% else %>
+    <div class="container mt-5">
+      <h2><%= @question.category&.name %></h2>
+      <h3><%= @question.text %></h3>
+      <% if @question.user_answer %>
+        <% if @question.user_answer.correct %>
+          <div class="alert alert-success"><%= @question.user_answer.text %></div>
+        <% else %>
+          <div class="alert alert-danger"><%= @question.user_answer.text %></div>
+        <% end %>
+      <% else %>
+        <div class="form-group mt-3">
+          <%= form_for @question, url: answer_round_question_path(@round, @question), method: :patch do |f| %>
+            <% @question.answers.shuffle.each do |answer| %>
+              <div class="form-check">
+                <%= f.radio_button :user_answer_id, answer.id, class: "form-check-input" %>
+                <%= f.label answer.text, class: "form-check-label" %>
+              </div>
+            <% end %>
+            <%= f.submit "Submit", class: "btn btn-primary mt-3" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</main>

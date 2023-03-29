@@ -1,0 +1,58 @@
+<main>
+  <div class="container">
+    <h1 class="my-4">Rounds</h1>
+    <div class="d-flex justify-content-end mb-3">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRoundModal">Create New Round</button>
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Amount of questions played</th>
+          <th scope="col">Score</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if current_user.rounds.empty? %>
+          <tr>
+            <td colspan="4">You have not played any rounds yet.</td>
+          </tr>
+        <% else %>
+          <% current_user.rounds.each do |round| %>
+            <tr>
+              <td><%= round.name %></td>
+              <td><%= round.questions_played %></td>
+              <td><%= round.score %></td>
+              <td><%= link_to '', round_path(round), class: "bi bi-info-circle-fill text-primary", title: "View Round Details" %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="newRoundModal" tabindex="-1" role="dialog" aria-labelledby="newRoundModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newRoundModalLabel">Create New Round</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_for current_user.rounds.new, method: :post do |f| %>
+        <div class="modal-body">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <%= f.submit "Create Round", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TriviaGpt</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <!-- Notice this is NOT safe, as we are exposing our openai access token -->
+  <!-- But it's what chatgpt suggested and we wanna keep changes as minimal as possible -->
+  <!-- We would always proxy the OpenAI API from our backend -->
+  <!-- But for showcasing purposes on how to do it from JS, we are keeping the frontend version too -->
+  <body data-openai-access-token="<%= Rails.configuration.x.openai_access_token %>">
+    <%= render "shared/header" %>
+
+    <%= yield %>
+
+    <%= render "shared/footer" %>
+  </body>
+</html>

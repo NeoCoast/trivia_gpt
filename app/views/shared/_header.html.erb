@@ -1,0 +1,19 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #b3d9ff;">
+    <div class="container-fluid">
+      <a class="navbar-brand mb-0 h1" href="<%= root_path %>">
+        TRIVIA GPT
+      </a>
+      <% if current_user %>
+        <span class="navbar-brand"><%= current_user.email %></span>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+            </li>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </nav>
+</header>
